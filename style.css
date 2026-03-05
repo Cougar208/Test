@@ -1,0 +1,129 @@
+body { 
+    margin: 0; 
+    padding: 0;
+    background-color: #000; 
+    overflow: hidden; 
+    font-family: 'Segoe UI', sans-serif;
+}
+
+#scene-container { 
+    width: 100vw; height: 100vh; position: relative; 
+    display: flex; justify-content: center; align-items: flex-end; 
+}
+
+#tree-container {
+    position: relative;
+    height: 90vh;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+}
+
+#tree-image {
+    image-rendering: auto;
+    height: 130%;
+    width: 150%;
+    object-fit: contain;
+    display: block;
+}
+
+#leaf-canopy {
+    position: absolute;
+    top: 5%;
+    width: 65%;
+    height: 50%;
+    z-index: 5;
+}
+
+.leaf {
+    position: absolute;
+    width: 45px; height: 60px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    animation: flutter-in 0.8s forwards;
+    background: linear-gradient(150deg, 
+        var(--leaf-color) 0%, 
+        color-mix(in srgb, var(--leaf-color), black 20%) 50%,
+        color-mix(in srgb, var(--leaf-color), black 40%) 100%);
+    clip-path: polygon(50% 0%, 100% 40%, 80% 85%, 50% 100%, 20% 85%, 0% 40%);
+    padding: 10px; margin: 10px;
+    
+    /* Эффект голограммы: смешивание с фоном и полупрозрачность */
+    mix-blend-mode: hard-light;
+    opacity: 0.85;
+    transition: all 0.3s ease;
+}
+
+.vein {
+    position: absolute; top: 10%; left: 48%; width: 2px; height: 80%;
+    background: rgba(255, 255, 255, 0.4); z-index: 1;
+}
+
+.leaf span {
+    position: relative; z-index: 2; 
+    font-size: 9px; 
+    font-weight: bold;
+    color: #fff;
+    /* Моноширинный шрифт для технологичного вида */
+    font-family: 'Courier New', Courier, monospace;
+    text-shadow: 0px 0px 4px #000, 0px 0px 8px var(--leaf-color); 
+    text-align: center;
+}
+
+@keyframes flutter-in {
+    0% { transform: scale(0) rotate(-90deg); opacity: 0; filter: brightness(0.5); }
+    100% { transform: scale(1) rotate(var(--random-rotate)); opacity: 0.85; filter: brightness(1.25); }
+}
+
+.leaf:hover {
+    transform: scale(1.6) rotate(0deg) !important;
+    z-index: 1000;
+    opacity: 1;
+    mix-blend-mode: normal;
+    cursor: pointer;
+    /* Неоновое свечение через drop-shadow */
+    filter: drop-shadow(0 0 8px var(--leaf-color)) drop-shadow(0 0 15px var(--leaf-color)) brightness(1.5);
+}
+
+/* Всплывающая подсказка при наведении */
+.leaf::after {
+    content: attr(data-info); /* Берет текст из атрибута data-info */
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: #0f0; 
+    padding: 6px 10px;
+    border: 1px solid var(--leaf-color);
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 0 10px var(--leaf-color);
+    z-index: 1001;
+}
+
+.leaf:hover::after {
+    opacity: 1;
+}
+
+/* Матрица и Трава */
+#matrix-rain-container { 
+    position: absolute; top:0; left:0; width:100%; height:100%; 
+    z-index:1; opacity: 0.2; overflow: hidden; color: #0f0; 
+    font-family: monospace; font-size: 14px; line-height: 1;
+}
+.matrix-column { 
+    position: absolute; top: -100%; display: flex; flex-direction: column; 
+    animation: fall linear infinite; 
+}
+@keyframes fall { to { transform: translateY(200vh); } }
+
+.grass { 
+    position: absolute; bottom: 0; width: 100%; height: 60px; 
+    background: linear-gradient(to top, #050a05, #143314); z-index: 3; 
+}

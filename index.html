@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оставьте свой след!</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* 1. Анимированный градиент для фона */
+body {
+    background: linear-gradient(-45deg, #a8e063, #f9a8d4, #75B894, #E5835E);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 2. Стилизуем палитру под листочки */
+.color-palette label {
+    width: 50px;
+    height: 50px;
+    border-radius: 2px 25px; /* Форма листика */
+    transform: rotate(-15deg); /* Слегка наклоним для естественности */
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+}
+
+.color-palette label:hover {
+    transform: scale(1.1) rotate(0deg);
+}
+
+.color-palette input[type="radio"]:checked + label {
+    transform: scale(1.2) rotate(0deg);
+    box-shadow: 0 0 0 4px white, 0 0 20px var(--swatch-color);
+}
+
+/* 3. Эффект для поля ввода */
+.form-field:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+}
+        /* --- Общие стил --- */
+        body {
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #a8e063 0%, #f9a8d4 100%);
+        }
+
+        /* --- Контейнер-карточка --- */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5em 2em;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Заголовки --- */
+        h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        .palette-title {
+            color: #555;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Поле для ввода имени --- */
+        .form-field {
+            width: 100%; padding: 15px; margin-bottom: 1rem; border: 1px solid #ccc;
+            border-radius: 10px; box-sizing: border-box; font-family: 'Nunito', sans-serif;
+            font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-field:focus {
+            outline: none; border-color: #f9a8d4;
+            box-shadow: 0 0 8px rgba(249, 168, 212, 0.4);
+        }
+
+        /* --- Стили для палитры --- */
+        .color-palette {
+            display: flex; justify-content: center;
+            flex-wrap: wrap; gap: 15px; margin-bottom: 2rem;
+        }
+        .color-palette input[type="radio"] { display: none; }
+
+        /* === ИЗМЕНЕНИЕ ЗДЕСЬ === */
+        /* Видимая часть - квадрат с закругленными краями */
+        .color-palette label {
+            width: 45px;
+            height: 45px;
+            /* Вместо 50% ставим конкретное значение для скругления */
+            border-radius: 10px; 
+            cursor: pointer;
+            border: 2px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .color-palette label:hover {
+            transform: scale(1.1);
+        }
+
+        /* Стиль для ВЫБРАННОГО цвета (остается без изменений) */
+        .color-palette input[type="radio"]:checked + label {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 4px white, 0 0 0 7px var(--swatch-color);
+        }
+        /* === КОНЕЦ ИЗМЕНЕНИЯ === */
+
+        /* --- Кнопка отправки --- */
+        button {
+            width: 100%; padding: 15px; border: none; border-radius: 10px;
+            background-color: #2ecc71; color: white; font-size: 1.1rem;
+            font-weight: 700; cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover { background-color: #27ae60; transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
+
+        /* --- Сообщения --- */
+        #message { margin-top: 1.5rem; font-weight: 700; height: 20px; transition: color 0.3s; }
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Оставьте свой след!</h1>
+        <form id="guestForm">
+            <input class="form-field" type="text" id="name" placeholder="Ваше имя" required>
+            <h2 class="palette-title">Выберите цвет листочка</h2>
+            
+            <div class="color-palette" id="color-palette">
+                <!-- HTML-код палитры остается прежним -->
+                <input type="radio" id="color1" name="color" value="#004B49" required><label for="color1" style="background-color: #004B49; --swatch-color: #004B49;"></label>
+                <input type="radio" id="color2" name="color" value="#007D5A"><label for="color2" style="background-color: #007D5A; --swatch-color: #007D5A;"></label>
+                <input type="radio" id="color3" name="color" value="#75B894"><label for="color3" style="background-color: #75B894; --swatch-color: #75B894;"></label>
+                <input type="radio" id="color4" name="color" value="#E8D6A0"><label for="color4" style="background-color: #E8D6A0; --swatch-color: #E8D6A0;"></label>
+                <input type="radio" id="color5" name="color" value="#E5835E"><label for="color5" style="background-color: #E5835E; --swatch-color: #E5835E;"></label>
+                <input type="radio" id="color6" name="color" value="#D54C5F"><label for="color6" style="background-color: #D54C5F; --swatch-color: #D54C5F;"></label>
+                <input type="radio" id="color7" name="color" value="#A33B6C"><label for="color7" style="background-color: #A33B6C; --swatch-color: #A33B6C;"></label>
+                <input type="radio" id="color8" name="color" value="#4B2A4B"><label for="color8" style="background-color: #4B2A4B; --swatch-color: #4B2A4B;"></label>
+            </div>
+            
+            <button type="submit">Добавить на дерево</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Добавь это внутрь скрипта, чтобы кнопка реагировала на выбор цвета
+document.querySelectorAll('input[name="color"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const btn = document.querySelector('button');
+        btn.style.backgroundColor = e.target.value;
+    });
+});
+        document.getElementById('guestForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const messageEl = document.getElementById('message');
+            messageEl.className = '';
+            const selectedColorInput = document.querySelector('input[name="color"]:checked');
+            if (!selectedColorInput) {
+                messageEl.textContent = 'Пожалуйста, выберите цвет!';
+                messageEl.classList.add('error');
+                return;
+            }
+            const color = selectedColorInput.value;
+            try {
+                const response = await fetch('http://192.168.31.234:5000/api/add_leaf', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, color }),
+                });
+                if (response.ok) {
+                    messageEl.textContent = 'Спасибо! Ваш листочек уже на дереве!';
+                    messageEl.classList.add('success');
+                    document.getElementById('guestForm').reset();
+                } else {
+                    messageEl.textContent = 'Ой, что-то пошло не так.';
+                    messageEl.classList.add('error');
+                }
+            } catch (error) {
+                console.error('Ошибка сети:', error);
+                messageEl.textContent = 'Не удалось подключиться к серверу.';
+                messageEl.classList.add('error');
+            }
+            setTimeout(() => { messageEl.textContent = ''; }, 5000);
+        });
+    </script>
+</body>
+</html>
